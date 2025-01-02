@@ -7,6 +7,7 @@ import re
 import random
 import concurrent.futures
 import numpy as np
+import io
 
 # Function to initialize session state variables
 def initialize_session_state():
@@ -45,24 +46,22 @@ st.set_page_config(
 )
 
 # Load models
-def load_model(file_path):
-    if os.path.exists(file_path):
-        with open(file_path, 'rb') as model_file:
-            return pickle.load(model_file)
+def load_model():
+    nlp_model = requests.get("https://github.com/Radical-Ghost/SymptomScout/blob/main/src/models/NLPModel.pkl")
+
+    vectorizer =  requests.get("https://github.com/Radical-Ghost/SymptomScout/blob/main/src/models/Vectorizer.pkl")
+
+    classifier_model = requests.get("https://github.com/Radical-Ghost/SymptomScout/blob/main/src/models/DiseaseClassifier.pkl")
+
+    if nlp_model.status_code == 200 and vectorizer.status_code == 200 and classifier_model.status_code == 200:
+        nlp_model = pickle.load(io.BytesIO(nlp_model.content))
+        vectorizer = pickle.load(io.BytesIO(vectorizer.content))
+        classifier_model = pickle.load(io.BytesIO(classifier_model.content))
+        return nlp_model, vectorizer, classifier_model
     else:
-        st.error(f"Model file not found: {file_path}")
-        st.stop()
+        raise Exception("Error fetching models from GitHub")
 
-
-model_path = os.path.join(os.getcwd(), 'models', 'NLPModel.pkl')
-nlp_model = load_model(model_path)
-
-model_path = os.path.join(os.getcwd(), 'models', 'Vectorizer.pkl')
-vectorizer =  load_model(model_path)
-
-model_path = os.path.join(os.getcwd(), 'models', 'DiseaseClassifier.pkl')
-classifier_model = load_model(model_path)
-
+nlp_model, vectorizer, classifier_model = load_model()
 
 # Preprocess input text
 def preprocess_input_text(input_text):
