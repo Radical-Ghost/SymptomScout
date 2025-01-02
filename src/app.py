@@ -36,7 +36,7 @@ symptom_keywords = [
     'skin problems', 'side pain', 'irritability', 'lower body pain', 'slow-healing', 'wounds', 'weight loss', 'blood in sputum', 'weakness', 'rapid heartbeat', 'hoarseness', 'neck pain', 'depression', 'skin rash', 'anxiety', 'skin irritation', 'high blood pressure', 'wheezing', 'retention of urine', 'immune system', 'coryza', 'cough', 'decreased appetite', 'shortness of breath', 'chest pain', 'blurred vision', 'numbness', 'irregular heartbeat', 'personality changes', 'abusing alcohol', 'diabetic', 'low libido', 'chest tightness', 'muscle weakness', 'erectile dysfunction', 'diarrhea', 'fatigue', 'muscle pain', 'lower abdominal pain', 'blurry vision', 'dizziness', 'abdominal pain', 'swollen lymph nodes', 'appetite changes', 'jaundice', 'swelling', 'poor coordination', 'problems with movement', 'insomnia', 'restlessness', 'painful periods', 'muscle tension', 'low back pain', 'burning abdominal pain', 'urinary problems', 'nasal congestion', 'nausea', 'leg cramps', 'hot flashes', 'ache all over', 'contagious', 'sweating', 'delayed growth', 'seizures', 'pregnancy', 'back pain', 'pelvic pain', 'body aches', 'memory loss', 'headaches', 'infertility', 'vomiting', 'skin lesions', 'weight gain', 'vaginal dryness', 'fainting', 'leg pain', 'allergic reaction', 'fever', 'thirst', 'sore throat', 'confusion', 'arm pain', 'skin swelling', 'menopause', 'heartburn', 'persistent cough', 'difficulty breathing', 'dark urine', 'joint pain', 'sharp chest pain', 'urination', 'stiff neck', 'hallucinations', 'mood swings', 'pain', 'difficulty swallowing', 'chills', 'rash', 'sharp abdominal pain', 'digestive problems', 'sexual problems', 'night sweats', 'headache', 'vision', 'hello', 'hair loss', 'difficulty concentrating', 'tremors', 'pain during intercourse', 'loss of appetite', 'tingling', 'hydrophobia', 'loss of sensation', 'disturbance of memory', 'healing', 'ache', 'arm', 'leg', 'aches', "weak", "hi", "chest", "tight", "feels", "dizzy"
 ]
 
-API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+API_KEY = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
 API_KEY = "AIzaSyAWfOaA_zYrilK7uQeuC3Mh0552PaoMRzo"
 
 st.set_page_config(
@@ -110,7 +110,7 @@ def get_final_response(predicted_label):
     }
 
     try:
-        response = requests.post(f"{api_url}?key={api_key}", headers=headers, data=json.dumps(data))
+        response = requests.post(f"{API_URL}?key={API_KEY}", headers=headers, data=json.dumps(data))
         response.raise_for_status()
         api_response = response.json()
 
@@ -150,7 +150,7 @@ def handle_prompt(prompt):
         st.session_state.global_array = [st.session_state.global_array[i] | Symptom_array[i] for i in range(len(st.session_state.global_array))]
         st.session_state.update_counter += 1
 
-        if st.session_state.update_counter == 1:
+        if st.session_state.update_counter == 8:
             st.session_state.global_array = [1 if x == 1 else 0 for x in st.session_state.global_array]
             st.session_state.predicted_label = get_ClassificationModel_response(st.session_state.global_array)
             st.session_state.update_counter = 0
