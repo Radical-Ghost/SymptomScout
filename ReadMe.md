@@ -44,6 +44,9 @@ SymptomScout is a Streamlit-based application that helps users identify potentia
 -   Enter your symptoms in the chat input to get potential disease predictions and relevant advice.
 -   The application will provide information about the predicted disease, home remedies, and nearby hospitals.
 
+![Screenshot 2025-01-02 202335](https://github.com/user-attachments/assets/6dbabd60-c491-44f6-8391-9efe61ce9ef2)
+![Screenshot 2025-01-02 202437](https://github.com/user-attachments/assets/0a8ced99-73b4-4a5d-b3d5-9234ea899b1c)
+
 ## YouTube Demo
 
 Watch the demo of SymptomScout on YouTube: [SymptomScout Demo]()
