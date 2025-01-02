@@ -50,4 +50,4 @@ Watch the demo of SymptomScout on YouTube: [SymptomScout Demo]()
 
 ## Deployed Model
 
-Access the deployed model here: [SymptomScout Deployed Model]()
+Access the deployed model here: [SymptomScout Deployed Model](https://symptomscout.streamlit.app/)
