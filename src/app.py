@@ -46,12 +46,19 @@ st.set_page_config(
 )
 
 # Load models
-def load_model():
-    nlp_model_response = requests.get("https://github.com/Radical-Ghost/SymptomScout/blob/main/src/models/NLPModel.pkl?raw=true")
-    vectorizer_response = requests.get("https://github.com/Radical-Ghost/SymptomScout/blob/main/src/models/Vectorizer.pkl?raw=true")
-    classifier_model_response = requests.get("https://github.com/Radical-Ghost/SymptomScout/blob/main/src/models/DiseaseClassifier.pkl?raw=true")
+def load_models():
+    # Define raw file URLs for the models
+    nlp_model_url = "https://github.com/Radical-Ghost/SymptomScout/blob/main/src/models/NLPModel.pkl?raw=true"
+    vectorizer_url = "https://github.com/Radical-Ghost/SymptomScout/blob/main/src/models/Vectorizer.pkl?raw=true"
+    classifier_model_url = "https://github.com/Radical-Ghost/SymptomScout/blob/main/src/models/DiseaseClassifier.pkl?raw=true"
+    
+    # Fetch the model files directly from the URLs
+    nlp_model_response = requests.get(nlp_model_url)
+    vectorizer_response = requests.get(vectorizer_url)
+    classifier_model_response = requests.get(classifier_model_url)
 
     if nlp_model_response.status_code == 200 and vectorizer_response.status_code == 200 and classifier_model_response.status_code == 200:
+        # Load models directly from the response content
         nlp_model = pickle.load(io.BytesIO(nlp_model_response.content))
         vectorizer = pickle.load(io.BytesIO(vectorizer_response.content))
         classifier_model = pickle.load(io.BytesIO(classifier_model_response.content))
@@ -59,7 +66,7 @@ def load_model():
     else:
         raise Exception("Error fetching models from GitHub")
 
-nlp_model, vectorizer, classifier_model = load_model()
+nlp_model, vectorizer, classifier_model = load_models()
 
 # Preprocess input text
 def preprocess_input_text(input_text):
