@@ -55,9 +55,9 @@ def load_model(file_path):
         st.error(f"Model file not found: {file_path}")
         st.stop()
 
-nlp_model = load_model('./models/NLPModel.pkl')
-vectorizer = load_model('./models/Vectorizer.pkl')
-classifier_model = load_model('./models/DiseaseClassifier.pkl')
+nlp_model = load_model('https://github.com/Radical-Ghost/SymptomScout/blob/main/src/models/NLPModel.pkl')
+vectorizer = load_model('https://github.com/Radical-Ghost/SymptomScout/blob/main/src/models/Vectorizer.pkl')
+classifier_model = load_model('https://github.com/Radical-Ghost/SymptomScout/blob/main/src/models/DiseaseClassifier.pkl')
 
 # Preprocess input text
 def preprocess_input_text(input_text):
