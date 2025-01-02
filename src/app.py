@@ -52,9 +52,9 @@ def load_model():
     classifier_model_response = requests.get("https://github.com/Radical-Ghost/SymptomScout/blob/main/src/models/DiseaseClassifier.pkl?raw=true")
 
     if nlp_model_response.status_code == 200 and vectorizer_response.status_code == 200 and classifier_model_response.status_code == 200:
-        nlp_model = pickle.load(io.BytesIO(nlp_model_response.content))
-        vectorizer = pickle.load(io.BytesIO(vectorizer_response.content))
-        classifier_model = pickle.load(io.BytesIO(classifier_model_response.content))
+        nlp_model = pickle.load(io.BytesIO(nlp_model.content))
+        vectorizer = pickle.load(io.BytesIO(vectorizer.content))
+        classifier_model = pickle.load(io.BytesIO(classifier_model.content))
         return nlp_model, vectorizer, classifier_model
     else:
         raise Exception("Error fetching models from GitHub")
