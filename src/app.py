@@ -1,5 +1,4 @@
 import streamlit as st
-from dotenv import load_dotenv
 import os
 import requests
 import json
@@ -36,9 +35,8 @@ symptom_keywords = [
     'skin problems', 'side pain', 'irritability', 'lower body pain', 'slow-healing', 'wounds', 'weight loss', 'blood in sputum', 'weakness', 'rapid heartbeat', 'hoarseness', 'neck pain', 'depression', 'skin rash', 'anxiety', 'skin irritation', 'high blood pressure', 'wheezing', 'retention of urine', 'immune system', 'coryza', 'cough', 'decreased appetite', 'shortness of breath', 'chest pain', 'blurred vision', 'numbness', 'irregular heartbeat', 'personality changes', 'abusing alcohol', 'diabetic', 'low libido', 'chest tightness', 'muscle weakness', 'erectile dysfunction', 'diarrhea', 'fatigue', 'muscle pain', 'lower abdominal pain', 'blurry vision', 'dizziness', 'abdominal pain', 'swollen lymph nodes', 'appetite changes', 'jaundice', 'swelling', 'poor coordination', 'problems with movement', 'insomnia', 'restlessness', 'painful periods', 'muscle tension', 'low back pain', 'burning abdominal pain', 'urinary problems', 'nasal congestion', 'nausea', 'leg cramps', 'hot flashes', 'ache all over', 'contagious', 'sweating', 'delayed growth', 'seizures', 'pregnancy', 'back pain', 'pelvic pain', 'body aches', 'memory loss', 'headaches', 'infertility', 'vomiting', 'skin lesions', 'weight gain', 'vaginal dryness', 'fainting', 'leg pain', 'allergic reaction', 'fever', 'thirst', 'sore throat', 'confusion', 'arm pain', 'skin swelling', 'menopause', 'heartburn', 'persistent cough', 'difficulty breathing', 'dark urine', 'joint pain', 'sharp chest pain', 'urination', 'stiff neck', 'hallucinations', 'mood swings', 'pain', 'difficulty swallowing', 'chills', 'rash', 'sharp abdominal pain', 'digestive problems', 'sexual problems', 'night sweats', 'headache', 'vision', 'hello', 'hair loss', 'difficulty concentrating', 'tremors', 'pain during intercourse', 'loss of appetite', 'tingling', 'hydrophobia', 'loss of sensation', 'disturbance of memory', 'healing', 'ache', 'arm', 'leg', 'aches', "weak", "hi", "chest", "tight", "feels", "dizzy"
 ]
 
-load_dotenv()
-api_key = os.getenv('GEMINI_API_KEY')
-api_url = os.getenv('GEMINI_API_URL')
+api_key = st.secrets["GEMINI_API_KEY"]
+api_url = st.secrets["GEMINI_API_URL"]
 
 st.set_page_config(
     page_title="SymptomScout",
@@ -55,9 +53,16 @@ def load_model(file_path):
         st.error(f"Model file not found: {file_path}")
         st.stop()
 
-nlp_model = load_model('https://github.com/Radical-Ghost/SymptomScout/blob/main/src/models/NLPModel.pkl')
-vectorizer = load_model('https://github.com/Radical-Ghost/SymptomScout/blob/main/src/models/Vectorizer.pkl')
-classifier_model = load_model('https://github.com/Radical-Ghost/SymptomScout/blob/main/src/models/DiseaseClassifier.pkl')
+
+model_path = os.path.join(os.getcwd(), 'models', 'NLPModel.pkl')
+nlp_model = load_model(model_path)
+
+model_path = os.path.join(os.getcwd(), 'models', 'Vectorizer.pkl')
+vectorizer =  load_model(model_path)
+
+model_path = os.path.join(os.getcwd(), 'models', 'DiseaseClassifier.pkl')
+classifier_model = load_model(model_path)
+
 
 # Preprocess input text
 def preprocess_input_text(input_text):
