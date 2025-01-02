@@ -2,6 +2,10 @@
 
 SymptomScout is a Streamlit-based application that helps users identify potential diseases based on their symptoms and provides relevant information and advice.
 
+# Github Link
+
+https://github.com/Radical-Ghost/SymptomScout/tree/main
+
 ## Installation
 
 1. Clone the repository:
